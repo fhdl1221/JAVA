@@ -1,10 +1,10 @@
 package d.inheritance.practice2;
 
-class Animal4 {
+class Animal {
     String name;
     int age;
 
-    public Animal4(String name, int age) {
+    public Animal(String name, int age) {
         this.name = name;
         this.age = age;
     }
@@ -14,7 +14,7 @@ class Animal4 {
     }
 }
 
-class Lion extends Animal4 {
+class Lion extends Animal {
     public Lion(String name, int age) {
         super(name, age);
     }
@@ -25,7 +25,7 @@ class Lion extends Animal4 {
     }
 }
 
-class Elephant extends Animal4 {
+class Elephant extends Animal {
     public Elephant(String name, int age) {
         super(name, age);
     }
@@ -36,7 +36,7 @@ class Elephant extends Animal4 {
     }
 }
 
-class Monkey extends Animal4 {
+class Monkey extends Animal {
     public Monkey(String name, int age) {
         super(name, age);
     }
@@ -48,31 +48,36 @@ class Monkey extends Animal4 {
 }
 
 class Zoo {
-    private Animal4[] animals;
+    private Animal[] animals;
+    int count;
 
-    public Zoo(Animal4[] animals) {
-        this.animals = animals;
+    public Zoo(int capacity) {
+        this.animals = new Animal[capacity];
+        this.count = 0;
     }
 
-    // 모든 동물의 소리를 출력하는 메서드
+    void addAnimal(Animal animal) {
+        if(count < animals.length) {
+            animals[count++] = animal;
+        }
+    }
+
     public void feedingTime() {
         System.out.println("=== 먹이 시간 ===");
 
-        for (Animal4 animal : animals) {
-            animal.makeSound();
+        for(int i = 0; i < count; i++) {
+            animals[i].makeSound();
         }
     }
 }
 
 public class P1 {
     public static void main(String[] args) {
-        Animal4 simba = new Lion("심바", 5);
-        Animal4 dumbo = new Elephant("덤보", 10);
-        Animal4 jojo = new Monkey("조조", 3);
+        Zoo zoo = new Zoo(10);
+        zoo.addAnimal(new Lion("심바", 5));
+        zoo.addAnimal(new Elephant("덤보", 10));
+        zoo.addAnimal(new Monkey("조조", 3));
 
-        Animal4[] zooAnimals = { simba, dumbo, jojo };
-
-        Zoo myZoo = new Zoo(zooAnimals);
-        myZoo.feedingTime();
+        zoo.feedingTime();
     }
 }
